@@ -18,22 +18,23 @@ public class Idle : State
     public override void UpdateLogic()
     {
         base.UpdateLogic();
-        ReadInput();
+        CheckForStateTransition();
     }
     #endregion
     
-    private void ReadInput()
+    private void CheckForStateTransition()
     {
-        //Move
-        if (Mathf.Abs(PlayerInput.MoveInput) > Mathf.Epsilon && _playerController.IsGrounded)
+        if (_playerController.IsGrounded)
         {
-            StateMachine.SetState(_playerController.MovingState);
-        }
-        
-        //Jump
-        if (PlayerInput.JumpInput && _playerController.IsGrounded)
-        {
-            StateMachine.SetState(_playerController.JumpState);
+            if (PlayerInput.MoveInput != 0)
+            {
+                StateMachine.SetState(_playerController.MovingState);
+            }
+            
+            if (PlayerInput.JumpInput)
+            {
+                StateMachine.SetState(_playerController.JumpState);
+            }
         }
     }
 }

@@ -5,7 +5,7 @@ public class Moving : State
 
     private PlayerController _playerController;
     
-    private const float MoveOffset = 0.76456f; // Making velocity match move speed;
+    private const float MoveOffset = 0.76456f;
 
     public Moving(FSMachine stateMachine) : base("Moving", stateMachine)
     {
@@ -37,6 +37,7 @@ public class Moving : State
         var moveDirection = new Vector3(PlayerInput.MoveInput, 0, 0);
         _playerController.RigidBody.AddForce(moveDirection, ForceMode.VelocityChange);
         
+        //Clamp velocity to match player move speed
         var velocity = _playerController.RigidBody.velocity.x;
         velocity = Mathf.Clamp(velocity, -_playerController.MoveSpeed + MoveOffset, _playerController.MoveSpeed - MoveOffset);
         
@@ -45,15 +46,17 @@ public class Moving : State
     
     private void CheckForStateTransition()
     {
-        if (Mathf.Abs(PlayerInput.MoveInput) < Mathf.Epsilon && _playerController.IsGrounded)
+        if (_playerController.IsGrounded)
         {
-            StateMachine.SetState(_playerController.IdleState);
-        }
-
-        //Jump Input
-        if (PlayerInput.JumpInput && _playerController.IsGrounded)
-        {
-            StateMachine.SetState(_playerController.JumpState);
+            if (PlayerInput.MoveInput == 0)
+            {
+                StateMachine.SetState(_playerController.IdleState);
+            }
+            
+            if (PlayerInput.JumpInput)
+            {
+                StateMachine.SetState(_playerController.JumpState);
+            }
         }
     }
 }

@@ -4,8 +4,8 @@ using UnityEngine.PlayerLoop;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : FSMachine
 {
-    [Range(0, 10)][SerializeField] private float _moveSpeed;
-    [Range(0, 10)][SerializeField] private float _jumpForce;
+    [Range(0, 20)][SerializeField] private float _moveSpeed;
+    [Range(0, 20)][SerializeField] private float _jumpForce;
     [SerializeField] private bool _debugPlayer;
 
     #region Properties
