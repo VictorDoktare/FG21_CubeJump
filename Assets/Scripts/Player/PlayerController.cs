@@ -4,8 +4,9 @@ using UnityEngine.PlayerLoop;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : FSMachine
 {
-    [Range(0, 20)][SerializeField] private float _moveSpeed;
-    [Range(0, 20)][SerializeField] private float _jumpForce;
+    [Range(0, 50)][SerializeField] private float _moveSpeed;
+    [Range(0, 50)][SerializeField] private float _jumpForce;
+    [Range(0, 50)][SerializeField] private float _fallSpeed;
     [SerializeField] private bool _debugPlayer;
 
     #region Properties
@@ -23,6 +24,7 @@ public class PlayerController : FSMachine
     
     //Jumping
     public bool IsGrounded { get; private set; }
+    public float FallSpeed { get => _fallSpeed; set => _fallSpeed = value; }
 
     #endregion
 
@@ -36,7 +38,7 @@ public class PlayerController : FSMachine
 
         RigidBody = GetComponent<Rigidbody>();
     }
-    
+
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Ground"))

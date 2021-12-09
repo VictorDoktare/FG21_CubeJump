@@ -3,8 +3,6 @@ using UnityEngine;
 public class Jump : State
 {
     private PlayerController _playerController;
-    
-    private const float MoveOffset = 1f;
 
     public Jump(FSMachine stateMachine) : base("Jump", stateMachine)
     {
@@ -30,14 +28,14 @@ public class Jump : State
     
     private void MovePlayer()
     {
-        var moveDirection = new Vector3(PlayerInput.MoveInput, _playerController.RigidBody.velocity.y, 0);
+        var moveDirection = new Vector3(PlayerInput.MoveInput,0, 0);
         _playerController.RigidBody.AddForce(moveDirection, ForceMode.VelocityChange);
+        //
+        // //Clamp velocity to match player move speed
+        var velocityX = _playerController.RigidBody.velocity.x;
+        velocityX = Mathf.Clamp(velocityX, -_playerController.MoveSpeed, _playerController.MoveSpeed);
         
-        //Clamp velocity to match player move speed
-        var velocity = _playerController.RigidBody.velocity.x;
-        velocity = Mathf.Clamp(velocity, -_playerController.MoveSpeed + MoveOffset, _playerController.MoveSpeed - MoveOffset);
-        
-        _playerController.RigidBody.velocity = new Vector3(velocity, 0, 0);
+        _playerController.RigidBody.velocity = new Vector3(velocityX,  _playerController.RigidBody.velocity.y, 0);
     }
 
     private void CheckForStateTransition()

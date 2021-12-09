@@ -35,12 +35,7 @@ public abstract class FSMachine : MonoBehaviour
     {
         return null;
     }
-    
-    protected virtual State GetCurrentState()
-    {
-        return State;
-    }
-    
+
     public void SetState(State newState)
     {
         State.Exit();

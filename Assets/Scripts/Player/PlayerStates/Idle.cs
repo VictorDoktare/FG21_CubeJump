@@ -11,7 +11,7 @@ public class Idle : State
     
     public override void Enter()
     {
-        //Todo Play Idle Anim;
+        base.Enter();
     }
 
     #region Logic & Physics Update
@@ -26,14 +26,13 @@ public class Idle : State
     {
         if (_playerController.IsGrounded)
         {
-            if (PlayerInput.MoveInput != 0)
-            {
-                StateMachine.SetState(_playerController.MovingState);
-            }
-            
             if (PlayerInput.JumpInput)
             {
                 StateMachine.SetState(_playerController.JumpState);
+            }
+            else if (PlayerInput.MoveInput != 0)
+            {
+                StateMachine.SetState(_playerController.MovingState);
             }
         }
     }
