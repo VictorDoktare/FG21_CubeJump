@@ -91,9 +91,6 @@ namespace Player
                 {
                     ShowLabel(new Rect(5,50,200,500), "red", 15, "Grounded: ", $"{IsGrounded.ToString()}");
                 }
-            
-                ShowLabel(new Rect(5,65,200,500), "grey", 15, "Move Velocity: ",$"{RigidBody.velocity.x.ToString()}");
-                ShowLabel(new Rect(5,80,200,500), "grey", 15, "Jump Velocity: ",$"{RigidBody.velocity.y.ToString()}");
             }
         }
         private void ShowLabel(Rect rectValue, string color, int size, string header, string text)
