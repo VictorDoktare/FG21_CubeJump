@@ -11,6 +11,5 @@ namespace Player
             MoveInput = Input.GetAxisRaw("Horizontal");
             JumpInput = Input.GetButtonDown("Jump");
         }
-
     }
 }

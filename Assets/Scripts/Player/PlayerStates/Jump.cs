@@ -15,12 +15,10 @@ namespace Player.PlayerStates
         }
     
         #region Logic & Physics Update
-
         public override void UpdatePhysics()
         {
             PlayerController.MovePlayer(PlayerInput.MoveInput, PlayerController.RigidBody.velocity.y, 0);
         }
-
         #endregion
     
         protected override void CheckForStateTransition()

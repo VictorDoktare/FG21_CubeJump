@@ -8,7 +8,14 @@ namespace Player.PlayerStates
         {
             StateName = "Falling";
         }
-
+        public override void Exit()
+        {
+            base.Exit();
+            PlayerController.MovePlayer(PlayerInput.MoveInput, PlayerController.RigidBody.velocity.y, 0);
+            
+        }
+        
+        #region Logic & Physics Update
         public override void UpdateLogic()
         {
             base.UpdateLogic();
@@ -19,13 +26,7 @@ namespace Player.PlayerStates
         {
             PlayerController.MovePlayer(PlayerInput.MoveInput, PlayerController.RigidBody.velocity.y, -PlayerController.FallSpeed);
         }
-
-        public override void Exit()
-        {
-            base.Exit();
-            PlayerController.MovePlayer(PlayerInput.MoveInput, PlayerController.RigidBody.velocity.y, 0);
-            
-        }
+        #endregion
 
         protected override void CheckForStateTransition()
         {

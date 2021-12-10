@@ -10,10 +10,12 @@ namespace Obstacle
         [Range(0, 10)][SerializeField] private float _spawnColdown;
         [SerializeField] private Transform[] _destinationPoints;
 
+        #region Unity Event Functions
         private void Start()
         {
             StartCoroutine(nameof(Spawn));
         }
+        #endregion
 
         IEnumerator Spawn()
         {

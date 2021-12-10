@@ -29,7 +29,6 @@ namespace Player.PlayerStates
             base.UpdatePhysics();
             PlayerController.MovePlayer(PlayerInput.MoveInput, 0, 0);
         }
-
         #endregion
     
         protected virtual void CheckForStateTransition()

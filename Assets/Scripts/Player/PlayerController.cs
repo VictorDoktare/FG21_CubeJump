@@ -13,7 +13,6 @@ namespace Player
         [SerializeField] private bool _debugPlayer;
 
         #region Properties
-
         //Player States
         public Idle IdleState { get; private set; }
         public Moving MovingState { get; private set; }
@@ -28,14 +27,13 @@ namespace Player
         //Jumping
         public bool IsGrounded { get; private set; }
         public float FallSpeed { get => _fallSpeed; set => _fallSpeed = value; }
-
         #endregion
     
         protected override State SetInitialState()
         {
             return IdleState;
         }
-
+        
         public void MovePlayer(float moveInput, float jumpVelocity, float fallSpeed)
         {
             var moveDirection = new Vector3(moveInput, fallSpeed, 0);
@@ -73,9 +71,7 @@ namespace Player
                 IsGrounded = false;
             }
         }
-        #endregion
-    
-        #region Player Debugging
+        
         private void OnGUI()
         {
             if (_debugPlayer)

@@ -12,7 +12,11 @@ namespace Obstacle
         private Rigidbody _rigidbody;
         private float _timer;
 
+        #region Properties
         public Vector3 MoveDirection { get; set; }
+        #endregion
+
+        #region MyRegion
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
@@ -29,6 +33,7 @@ namespace Obstacle
             RotateObstacle();
             CheckLifetime();
         }
+        #endregion
     
         private void MoveObstacle()
         {

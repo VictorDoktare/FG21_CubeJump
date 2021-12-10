@@ -5,16 +5,21 @@ namespace Managers
 {
     public class PoolManager : MonoBehaviour
     {
-        public static PoolManager Instance { get; private set; }
-    
+
         [Header("Pool Settings")]
         [SerializeField] private GameObject _poolPrefab;
         [Range(1, 1000)][SerializeField] private int amountToPool;
-        public int InactiveCount;
-        public int ActiveCount;
+        [SerializeField] private bool _debugPool;
 
         private List<GameObject> _pool;
+        
+        #region Properties
+        public static PoolManager Instance { get; private set; }
+        public int InactiveCount { set; get; }
+        public int ActiveCount { set; get; }
+        #endregion
 
+        #region Unity Event Fuctions
         private void Awake()
         {
             if (Instance == null)
@@ -32,6 +37,18 @@ namespace Managers
         {
             SetPool();
         }
+        
+        private void OnGUI()
+        {
+            if (_debugPool)
+            {
+                GUI.Label(new Rect(5, 80, 200, 500),
+                    $"<size=15>Active pool count: <color='green'>{ActiveCount}</color></size>");
+                GUI.Label(new Rect(5, 95, 200, 500),
+                    $"<size=15>Active pool count: <color='red'>{InactiveCount}</color></size>"); 
+            }
+        }
+        #endregion
 
         private void SetPool()
         {
@@ -40,7 +57,7 @@ namespace Managers
         
             for (int i = 0; i < amountToPool; i++)
             {
-                obstacle = Instantiate(_poolPrefab);
+                obstacle = Instantiate(_poolPrefab, GameObject.Find("PooledObjects").transform, true);
                 obstacle.SetActive(false);
                 InactiveCount++;
                 _pool.Add(obstacle);
@@ -57,14 +74,6 @@ namespace Managers
                 }
             }
             return null;
-        }
-
-        private void OnGUI()
-        {
-            GUI.Label(new Rect(5, 80, 200, 500),
-                $"<size=15>Active pool count: <color='green'>{ActiveCount}</color></size>");
-            GUI.Label(new Rect(5, 95, 200, 500),
-                $"<size=15>Active pool count: <color='red'>{InactiveCount}</color></size>"); 
         }
     }
 }
