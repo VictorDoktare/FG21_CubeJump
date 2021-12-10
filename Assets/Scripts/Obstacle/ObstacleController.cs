@@ -1,3 +1,4 @@
+using System;
 using Managers;
 using UnityEngine;
 
@@ -11,12 +12,12 @@ namespace Obstacle
     
         private Rigidbody _rigidbody;
         private float _timer;
-
+        
         #region Properties
         public Vector3 MoveDirection { get; set; }
         #endregion
 
-        #region MyRegion
+        #region Unity Event Functions
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
@@ -33,6 +34,15 @@ namespace Obstacle
             RotateObstacle();
             CheckLifetime();
         }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.gameObject.CompareTag("ClearChecker"))
+            {
+                EventManager.Instance.Score();
+            }
+        }
+
         #endregion
     
         private void MoveObstacle()

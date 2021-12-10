@@ -15,6 +15,16 @@ namespace Obstacle
         {
             StartCoroutine(nameof(Spawn));
         }
+        
+        private void OnEnable()
+        {
+            EventManager.Instance.ONPlayerDeath += DissableSpawner;
+        }
+
+        private void OnDisable()
+        {
+            EventManager.Instance.ONPlayerDeath -= DissableSpawner;
+        }
         #endregion
 
         IEnumerator Spawn()
@@ -22,7 +32,7 @@ namespace Obstacle
             while (true)
             {
                 yield return new WaitForSeconds(_spawnColdown);
-
+                
                 var obstacle = PoolManager.Instance.GetPooledObject();
             
                 if (obstacle != null)
@@ -40,6 +50,11 @@ namespace Obstacle
                 }
             }
             // ReSharper disable once IteratorNeverReturns
+        }
+
+        private void DissableSpawner()
+        {
+            gameObject.SetActive(false);
         }
     }
 }

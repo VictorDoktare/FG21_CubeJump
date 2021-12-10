@@ -25,16 +25,12 @@ namespace Managers
             if (Instance == null)
             {
                 Instance = this;
-                DontDestroyOnLoad(gameObject);
             }
             else
             {
                 Destroy(gameObject);
             }
-        }
-
-        private void Start()
-        {
+            
             SetPool();
         }
         
@@ -50,7 +46,7 @@ namespace Managers
         }
         #endregion
 
-        private void SetPool()
+        public void SetPool()
         {
             _pool = new List<GameObject>();
             GameObject obstacle;

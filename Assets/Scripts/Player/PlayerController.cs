@@ -1,6 +1,9 @@
+using System;
 using FSMachine;
+using Managers;
 using Player.PlayerStates;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Player
 {
@@ -55,12 +58,18 @@ namespace Player
 
             RigidBody = GetComponent<Rigidbody>();
         }
-    
+        
         private void OnCollisionEnter(Collision other)
         {
             if (other.gameObject.CompareTag("Ground"))
             {
                 IsGrounded = true;
+            }
+
+            if (other.gameObject.CompareTag("Obstacle"))
+            {
+                EventManager.Instance.PlayerDeath();
+                Destroy(gameObject);
             }
         }
     
@@ -71,7 +80,7 @@ namespace Player
                 IsGrounded = false;
             }
         }
-        
+
         private void OnGUI()
         {
             if (_debugPlayer)
