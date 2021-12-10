@@ -19,7 +19,14 @@ namespace Player.PlayerStates
         {
             PlayerController.MovePlayer(PlayerInput.MoveInput, PlayerController.RigidBody.velocity.y, -PlayerController.FallSpeed);
         }
-    
+
+        public override void Exit()
+        {
+            base.Exit();
+            PlayerController.MovePlayer(PlayerInput.MoveInput, PlayerController.RigidBody.velocity.y, 0);
+            
+        }
+
         protected override void CheckForStateTransition()
         {
             if (PlayerController.IsGrounded)

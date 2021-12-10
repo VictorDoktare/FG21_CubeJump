@@ -9,6 +9,8 @@ namespace Player.PlayerStates
         public override void Enter()
         {
             StateName = "Jump";
+            
+            PlayerController.RigidBody.velocity = Vector3.zero;
             PlayerController.RigidBody.AddForce(Vector3.up * PlayerController.JumpForce, ForceMode.VelocityChange);
         }
     

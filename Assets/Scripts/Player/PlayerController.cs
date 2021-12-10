@@ -40,8 +40,7 @@ namespace Player
         {
             var moveDirection = new Vector3(moveInput, fallSpeed, 0);
             RigidBody.AddForce(moveDirection, ForceMode.VelocityChange);
-
-            //Clamp velocity to match player move speed
+            
             var velocityX = RigidBody.velocity.x;
             velocityX = Mathf.Clamp(velocityX, -MoveSpeed, MoveSpeed);
         
