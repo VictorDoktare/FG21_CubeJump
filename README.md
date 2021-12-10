@@ -1,5 +1,5 @@
 # FG21 GamePatterns Assignment
-Victor Doktare
+Victor Doktare  
 A simple game abut avoiding obstacles. Main focus with this game was to test out using state pattern for the player movement.
 
 **-State Pattern:**  
