@@ -1,43 +1,45 @@
-using System;
 using UnityEngine;
 
-public abstract class FSMachine : MonoBehaviour
+namespace FSMachine
 {
-    protected State State;
-    protected string PrevState { get; private set; }
-
-    private void Start()
+    public abstract class FSMachine : MonoBehaviour
     {
-        State = SetInitialState();
+        protected State State;
+        protected string PrevState { get; private set; }
 
-        State?.Enter();
-    }
+        private void Start()
+        {
+            State = SetInitialState();
+
+            State?.Enter();
+        }
     
-    private void Update()
-    {
-        State?.UpdateLogic();
-    }
+        private void Update()
+        {
+            State?.UpdateLogic();
+        }
 
-    private void FixedUpdate()
-    {
-        State?.UpdatePhysics();
-    }
+        private void FixedUpdate()
+        {
+            State?.UpdatePhysics();
+        }
     
-    protected virtual State SetInitialState()
-    {
-        return null;
-    }
+        protected virtual State SetInitialState()
+        {
+            return null;
+        }
 
-    public void SetState(State newState)
-    {
-        PrevState = State.Name;
-        State.Exit();
-        State = newState;
-        newState.Enter();
-    }
+        public void SetState(State newState)
+        {
+            PrevState = State.StateName;
+            State.Exit();
+            State = newState;
+            newState.Enter();
+        }
 
-    public string GetPrevState()
-    {
-        return PrevState;
+        public string GetPrevState()
+        {
+            return PrevState;
+        }
     }
 }

@@ -1,38 +1,49 @@
-using UnityEngine;
+using FSMachine;
 
-public class Idle : State
+namespace Player.PlayerStates
 {
-    private PlayerController _playerController;
+    public class Idle : State
+    {
+        protected readonly PlayerController PlayerController;
     
-    public Idle(FSMachine stateMachine) : base("Idle", stateMachine)
-    {
-        _playerController = (PlayerController)StateMachine;
-    }
-    
-    public override void Enter()
-    {
-        base.Enter();
-    }
-
-    #region Logic & Physics Update
-    public override void UpdateLogic()
-    {
-        base.UpdateLogic();
-        CheckForStateTransition();
-    }
-    #endregion
-    
-    private void CheckForStateTransition()
-    {
-        if (_playerController.IsGrounded)
+        public Idle(FSMachine.FSMachine stateMachine) :  base("Idle", stateMachine)
         {
-            if (PlayerInput.JumpInput)
+            PlayerController = (PlayerController)StateMachine;
+        }
+
+        public override void Enter()
+        {
+            base.Enter();
+            PlayerInput.MoveInput = 0;
+        }
+
+        #region Logic & Physics Update
+        public override void UpdateLogic()
+        {
+            base.UpdateLogic();
+            CheckForStateTransition();
+        }
+
+        public override void UpdatePhysics()
+        {
+            base.UpdatePhysics();
+            PlayerController.MovePlayer(PlayerInput.MoveInput, 0, 0);
+        }
+
+        #endregion
+    
+        protected virtual void CheckForStateTransition()
+        {
+            if (PlayerController.IsGrounded)
             {
-                StateMachine.SetState(_playerController.JumpState);
-            }
-            else if (PlayerInput.MoveInput != 0)
-            {
-                StateMachine.SetState(_playerController.MovingState);
+                if (PlayerInput.JumpInput)
+                {
+                    StateMachine.SetState(PlayerController.JumpState);
+                }
+                else if (PlayerInput.MoveInput != 0)
+                {
+                    StateMachine.SetState(PlayerController.MovingState);
+                }
             }
         }
     }

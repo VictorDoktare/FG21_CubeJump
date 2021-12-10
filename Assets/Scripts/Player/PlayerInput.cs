@@ -1,13 +1,16 @@
 using UnityEngine;
 
-public class PlayerInput : MonoBehaviour
+namespace Player
 {
-    public static float MoveInput;
-    public static bool JumpInput;
-    private void Update()
+    public class PlayerInput : MonoBehaviour
     {
-        MoveInput = Input.GetAxisRaw("Horizontal");
-        JumpInput = Input.GetButtonDown("Jump");
-    }
+        public static float MoveInput;
+        public static bool JumpInput;
+        private void Update()
+        {
+            MoveInput = Input.GetAxisRaw("Horizontal");
+            JumpInput = Input.GetButtonDown("Jump");
+        }
 
+    }
 }

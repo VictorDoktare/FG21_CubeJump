@@ -1,16 +1,19 @@
-public abstract class State
+namespace FSMachine
 {
-    public string Name;
-    protected FSMachine StateMachine;
-    
-    public State(string name, FSMachine stateMachine)
+    public abstract class State
     {
-        Name = name;
-        StateMachine = stateMachine;
-    }
+        public string StateName;
+        protected global::FSMachine.FSMachine StateMachine;
     
-    public virtual void Enter() { }
-    public virtual void UpdateLogic() { }
-    public virtual void UpdatePhysics() { }
-    public virtual void Exit() { }
+        public State(string stateName, global::FSMachine.FSMachine stateMachine)
+        {
+            StateName = stateName;
+            StateMachine = stateMachine;
+        }
+    
+        public virtual void Enter() { }
+        public virtual void UpdateLogic() { }
+        public virtual void UpdatePhysics() { }
+        public virtual void Exit() { }
+    }
 }

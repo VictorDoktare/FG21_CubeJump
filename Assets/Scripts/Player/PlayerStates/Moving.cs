@@ -1,57 +1,26 @@
-using UnityEngine;
-
-public class Moving : State
+namespace Player.PlayerStates
 {
-
-    private PlayerController _playerController;
-
-    public Moving(FSMachine stateMachine) : base("Moving", stateMachine)
+    public class Moving : Idle
     {
-        _playerController = (PlayerController)StateMachine;
-    }
+        public Moving(FSMachine.FSMachine stateMachine) : base(stateMachine) { }
 
-    public override void Enter()
-    {
-        base.Enter();
-    }
-
-    #region Logic & Physics Update
-    public override void UpdateLogic()
-    {
-        base.UpdateLogic();
-        CheckForStateTransition();
-    }
-
-    public override void UpdatePhysics()
-    {
-        base.UpdatePhysics();
-        MovePlayer();
-    }
-    #endregion
-    
-    private void MovePlayer()
-    {
-        var moveDirection = new Vector3(PlayerInput.MoveInput, 0, 0);
-        _playerController.RigidBody.AddForce(moveDirection, ForceMode.VelocityChange);
-
-        //Clamp velocity to match player move speed
-        var velocity = _playerController.RigidBody.velocity.x;
-        velocity = Mathf.Clamp(velocity, -_playerController.MoveSpeed, _playerController.MoveSpeed);
-        
-        _playerController.RigidBody.velocity = new Vector3(velocity, 0, 0);
-    }
-    
-    private void CheckForStateTransition()
-    {
-        if (_playerController.IsGrounded)
+        public override void Enter()
         {
-            if (PlayerInput.JumpInput)
+            StateName = "Moving";
+        }
+    
+        protected override void CheckForStateTransition()
+        {
+            if (PlayerController.IsGrounded)
             {
-                StateMachine.SetState(_playerController.JumpState);
-            }
-            else if (PlayerInput.MoveInput == 0)
-            {
-                StateMachine.SetState(_playerController.IdleState);
+                if (PlayerInput.JumpInput)
+                {
+                    StateMachine.SetState(PlayerController.JumpState);
+                }
+                else if (PlayerInput.MoveInput == 0)
+                {
+                    StateMachine.SetState(PlayerController.IdleState);
+                }
             }
         }
     }
