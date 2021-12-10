@@ -5,7 +5,7 @@ public abstract class State
     
     public State(string name, FSMachine stateMachine)
     {
-        Name = $"State: {name}";
+        Name = name;
         StateMachine = stateMachine;
     }
     

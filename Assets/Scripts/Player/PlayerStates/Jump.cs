@@ -40,7 +40,7 @@ public class Jump : State
 
     private void CheckForStateTransition()
     {
-        if (_playerController.RigidBody.velocity.y < 0)
+        if (_playerController.RigidBody.velocity.y < -0.25f)
         {
             StateMachine.SetState(_playerController.FallingState);
         }

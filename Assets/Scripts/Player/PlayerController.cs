@@ -27,6 +27,11 @@ public class PlayerController : FSMachine
     public float FallSpeed { get => _fallSpeed; set => _fallSpeed = value; }
 
     #endregion
+    
+    protected override State SetInitialState()
+    {
+        return IdleState;
+    }
 
     #region Unity Event Functions
     private void Awake()
@@ -38,7 +43,7 @@ public class PlayerController : FSMachine
 
         RigidBody = GetComponent<Rigidbody>();
     }
-
+    
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Ground"))
@@ -61,29 +66,25 @@ public class PlayerController : FSMachine
     {
         if (_debugPlayer)
         {
-            ShowLabel(new Rect(5,5,200,50), "white", 25, State.Name);
+            ShowLabel(new Rect(5,5,300,50), "white", 20, "Current State: ", $"{State.Name}");
+            ShowLabel(new Rect(5,25,300,50), "grey", 20, "Old State: ", $"{GetPrevState()}");
 
             if (IsGrounded)
             {
-                ShowLabel(new Rect(5,35,200,500), "green", 15, $"Grounded: {IsGrounded.ToString()}");
+                ShowLabel(new Rect(5,50,200,500), "green", 15, "Grounded: ", $"{IsGrounded.ToString()}");
             }
             else
             {
-                ShowLabel(new Rect(5,35,200,500), "red", 15, $"Grounded: {IsGrounded.ToString()}");
+                ShowLabel(new Rect(5,50,200,500), "red", 15, "Grounded: ", $"{IsGrounded.ToString()}");
             }
             
-            ShowLabel(new Rect(5,55,200,500), "white", 15, $"Move Velocity: {RigidBody.velocity.x.ToString()}");
-            ShowLabel(new Rect(5,75,200,500), "white", 15, $"Jump Velocity: {RigidBody.velocity.y.ToString()}");
+            ShowLabel(new Rect(5,65,200,500), "grey", 15, "Move Velocity: ",$"{RigidBody.velocity.x.ToString()}");
+            ShowLabel(new Rect(5,80,200,500), "grey", 15, "Jump Velocity: ",$"{RigidBody.velocity.y.ToString()}");
         }
     }
-    private void ShowLabel(Rect rectValue, string color, int size, string text)
+    private void ShowLabel(Rect rectValue, string color, int size, string header, string text)
     {
-        GUI.Label(rectValue, $"<color='{color}'><size={size}>{text}</size></color>"); 
+        GUI.Label(rectValue, $"<size={size}>{header}<color='{color}'>{text}</color></size>"); 
     }
     #endregion
-
-    protected override State SetInitialState()
-    {
-        return IdleState;
-    }
 }

@@ -4,31 +4,23 @@ using UnityEngine;
 public abstract class FSMachine : MonoBehaviour
 {
     protected State State;
+    protected string PrevState { get; private set; }
 
     private void Start()
     {
         State = SetInitialState();
 
-        if (State != null)
-        {
-            State.Enter();
-        }
+        State?.Enter();
     }
     
     private void Update()
     {
-        if (State != null)
-        {
-            State.UpdateLogic();
-        }
+        State?.UpdateLogic();
     }
 
     private void FixedUpdate()
     {
-        if (State != null)
-        {
-            State.UpdatePhysics();
-        }
+        State?.UpdatePhysics();
     }
     
     protected virtual State SetInitialState()
@@ -38,8 +30,14 @@ public abstract class FSMachine : MonoBehaviour
 
     public void SetState(State newState)
     {
+        PrevState = State.Name;
         State.Exit();
         State = newState;
-        State.Enter();
+        newState.Enter();
+    }
+
+    public string GetPrevState()
+    {
+        return PrevState;
     }
 }
